@@ -1,4 +1,6 @@
 # python基础练习
+import functools
+import time
 
 weight = 70.0
 height = 1.75
@@ -322,17 +324,46 @@ print(f.__name__, f(3))
 # 装饰器，函数内部函数
 def log(text):
     def decor(func):
+        @functools.wraps(func)
         def wrapper(*args, **kw):
             print('%s %s():' % (text, func.__name__))
+            print('func execute time:', time.localtime())
             return func(*args, **kw)
+
         return wrapper
+
     return decor
 
 
-@log
+@log("你好世界")
 def now():
     print('2021-10-11 16:15:06')
+    print('func name:', now.__name__)
 
 
+now()
 
-print(now())
+
+# 设计一个decorator，它可作用于任何函数上，并打印该函数的执行时间
+def currTime(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kv):
+        print("time:", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+        return func(*args, **kv)
+
+    return wrapper
+
+
+@currTime
+def nowTime():
+    print("我执行了")
+
+
+nowTime()
+
+# functools.partial(f,param) 帮助创建偏函数:
+# def int2(x, base=2):
+#     return int(x, base)
+int2 = functools.partial(int, base=16)
+
+print(int2('85485245'))
