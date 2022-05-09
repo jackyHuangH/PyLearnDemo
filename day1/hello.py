@@ -5,6 +5,9 @@ __author__ = 'Jacky Huang'
 
 import sys
 
+import keyword
+print("keyword;",keyword.kwlist)
+
 # 面向对象
 import types
 
@@ -61,6 +64,12 @@ class Screen(object):
     def resolution(self):
         return self.__width * self.__height
 
+    # toString()
+    def __str__(self):
+        return "Screen width: %s,height: %s" % (self.__width, self.__height)
+
+    __repr__ = __str__
+
 
 def sleep(name):
     print(name, "is sleeping....")
@@ -90,10 +99,13 @@ def test():
     man1.sex = 1
     man1.height = 180
     man1.e = 90
+    print(man1.e)
     s = Screen()
     s.height = 768
     s.width = 1024
     print('resolution:', s.resolution)
+    print(s.__str__())
+    print(s.__repr__)
 
 
 if __name__ == '__main__':
