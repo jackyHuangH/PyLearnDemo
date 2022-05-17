@@ -1,6 +1,34 @@
 # python基础练习
+from collections.abc import Iterable
+import sys
+import math
 import functools
 import time
+
+# from...import... 导入特定成员
+from sys import argv, path
+
+# r字符串，屏蔽转义
+print("this is a \n long string")
+print(r"this is a \n long string")
+print(f'''我是字符串看看
+... djk kjk
+... kdjkHjkdhfj 
+好好好''')
+
+# 字符串的截取的语法格式如下：变量[头下标:尾下标:步长]
+string = "谁说站在光里的才算英雄"
+# 不换行输出，末尾加上end=""
+print(string, end="")
+print(string*2)
+# 输出第一个到倒数第一个字符
+print(string[0:-1])
+print(string[0:2:1])
+# 变量赋值
+a, b, c = 3, "3", 98
+print(type(a), type(b), type(c))
+# true,false是int子类
+print(1 is True, 1+True)
 
 weight = 70.0
 height = 1.75
@@ -37,10 +65,23 @@ print(s)
 
 # list = [],py的list可以包含不同数据类型元素
 fruit = ["apple", "orange", "banana", 555, 4.55]
+fruit.append("taylor swift")
 print(f"fruit:{fruit}")
-# tuple = () ,元组，类似于Java的数组，长度不可变
+# tuple = () ,元组，类似于Java的数组，元素类型可以不同，长度不可变
 grade = (1, 3, 4, 5,)
+# 单个元素的tuple必须后面跟逗号,
+singleTuple = (1,)
+print("single tuple:", singleTuple)
 grades = (1, 3, 4, 5, ['小乌龟', 999])
+
+# set =set([]),不重复的集合，与Java相同
+sss = set([1, 2, 2, 3, 4, 4])
+print("set:", sss)
+sss.add(7)
+sss.add("dddd")
+sss.remove(4)
+sss.add(grade)  # set中只允许不可变的对象
+print(sss)
 
 # dict={key:value} ,键-值对，类比Java Map
 d = {"name": "jacky", "wealth": 9999999999999999999999999999}
@@ -52,14 +93,7 @@ else:
 d["sex"] = 'man'
 d['list'] = grades
 print(d)
-# set =set([]),不重复的集合，与Java相同
-sss = set([1, 2, 2, 3, 4, 4])
-print(sss)
-sss.add(7)
-sss.add("dddd")
-sss.remove(4)
-sss.add(grade)  # set中只允许不可变的对象
-print(sss)
+
 
 # 函数
 # 空函数
@@ -74,8 +108,6 @@ print(sss)
 # 练习：请定义一个函数quadratic(a, b, c)，接收3个参数，返回一元二次方程 ax^2+bx+c=0 的两个解。
 # x=(-b±根号b^2-4ac)/2a
 # 提示：计算平方根可以调用math.sqrt()函数：
-
-import math
 
 
 def quadratic(a, b, c):
@@ -139,11 +171,15 @@ fun1('bob', 11, sex='man', tel=1254444)
 # 在Python中定义函数，可以用必选参数、默认参数、可变参数、关键字参数和命名关键字参数，
 # 这5种参数都可以组合使用。但是请注意，参数定义的顺序必须是：必选参数、默认参数、可变参数、命名关键字参数和关键字参数。
 def funMixParam(a, b='ddd', *num, **kv):
+    if 'city' in kv:
+        print("用户设置了city")
+        pass
     print('a=', a, 'b=', b, 'num=', num, 'kv=', kv)
 
 
 numTuple = (11, 3, 33333, 4)
-funMixParam('混合参数', '晚风中闪过', *numTuple, apple=3, banana=5, orange=None)
+funMixParam('混合参数', '晚风中闪过', *numTuple, city='北京',
+            apple=3, banana=5, orange=None)
 
 
 def mul(x, *y):
@@ -179,7 +215,6 @@ print(f"tuple slice:{t[:4]}")
 print(f"tuple slice:{t[::-2]}")
 
 # 练习：实现string的trim(),去除字符串首尾空格
-import sys
 
 sys.setrecursionlimit(10000)  # 设置递归最大限制深度
 
@@ -219,9 +254,9 @@ print(trim('s' + ' ' * 1000))
 
 # 默认情况下，dict迭代的是key。如果要迭代value，可以用for value in d.values()，
 # 如果要同时迭代key和value，可以用for k, v in d.items()
-from collections.abc import Iterable
 
-ddd = {"name": "jacky", "wealth": 9999999999999999999999999999, "age": 34, "sex": "man"}
+ddd = {"name": "jacky", "wealth": 9999999999999999999999999999,
+       "age": 34, "sex": "man"}
 for key, value in ddd.items():
     print(key, '---', value)
 
@@ -317,7 +352,11 @@ print("sorted by score:", sorted(L, key=by_score, reverse=True))
 # 关键字lambda表示匿名函数，冒号前面的x表示函数参数。
 # 匿名函数有个限制，就是只能有一个表达式，不用写return，返回值就是该表达式的结果。
 # 用匿名函数有个好处，因为函数没有名字，不必担心函数名冲突。此外，匿名函数也是一个函数对象，也可以把匿名函数赋值给一个变量，再利用变量来调用该函数：
-f = lambda x: x * x
+
+
+def f(x): return x * x
+
+
 print(f.__name__, f(3))
 
 
